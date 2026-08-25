@@ -1,59 +1,54 @@
 <!doctype html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Interactive degree planner for Taibah University's Cybersecurity program. Explore courses, prerequisites, and your path to graduation.">
+  <meta name="description" content="مخطط تفاعلي للخطة الدراسية لتخصص الأمن السيبراني في جامعة طيبة.">
   <meta name="application-name" content="cyb-plan">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="cyb-plan">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="cyb-plan — Taibah Cybersecurity Planner">
-  <meta property="og:description" content="Explore the Cybersecurity degree plan, understand prerequisites, and track your progress to graduation.">
+  <meta property="og:title" content="cyb-plan — مخطط الأمن السيبراني">
+  <meta property="og:description" content="استكشف الخطة الدراسية، المتطلبات السابقة، وتقدمك نحو التخرج.">
   <meta property="og:url" content="https://mqsirrel.github.io/cyb-plan/">
   <meta property="og:image" content="https://mqsirrel.github.io/cyb-plan/icons/icon-512.svg">
-  <meta property="og:image:alt" content="cyb-plan app icon">
-  <meta name="twitter:card" content="summary">
-  <meta name="twitter:title" content="cyb-plan — Taibah Cybersecurity Planner">
-  <meta name="twitter:description" content="Interactive Cybersecurity degree planner for Taibah University students.">
-  <meta name="twitter:image" content="https://mqsirrel.github.io/cyb-plan/icons/icon-512.svg">
   <link rel="manifest" href="site.webmanifest">
   <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icons/icon-192.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
-  <title>cyb-plan — Taibah Cybersecurity Planner</title>
+  <title>cyb-plan — مخطط الأمن السيبراني</title>
 </head>
 <body>
   <header class="nav">
     <a class="brand" href="."><span class="brand-mark">CP</span><span>cyb<span class="brand-dot">·</span>plan</span></a>
-    <nav aria-label="Primary navigation"><a class="active" href="#plan">Study plan</a><a href="#nextSection">Next courses</a><a href="#progressSection">My progress</a></nav>
-    <a class="official" href="https://www.taibahu.edu.sa/en/admission-and-study/programs/cyber-security-0" target="_blank" rel="noreferrer">Official plan <span>↗</span></a>
+    <nav aria-label="التنقل الرئيسي"><a class="active" href="#plan">الخطة الدراسية</a><a href="#nextSection">المواد القادمة</a><a href="#progressSection">تقدمي</a></nav>
+    <div class="nav-actions"><button class="lang-switch" id="languageToggle" type="button">EN</button><a class="official" href="https://www.taibahu.edu.sa/en/admission-and-study/programs/cyber-security-0" target="_blank" rel="noreferrer">الخطة الرسمية <span>↗</span></a></div>
   </header>
 
   <main>
     <section class="hero">
-      <div class="hero-copy"><p class="eyebrow">TAIBAH UNIVERSITY · CYBERSECURITY</p><h1>Your degree,<br><em>made clearer.</em></h1><p class="hero-text">Explore every course, understand prerequisites, and keep track of your journey to graduation.</p><div class="hero-actions"><a class="primary-action" href="#plan">Explore study plan <span>↓</span></a><a class="secondary-action" href="#nextSection">See what's next</a></div></div>
-      <div class="hero-progress" id="progressSection" aria-label="Your degree progress"><div class="progress-ring"><span id="progress">0%</span></div><div><strong id="progressLabel">Just getting started</strong><span id="progressMeta">0 courses completed</span></div></div>
+      <div class="hero-copy"><p class="eyebrow">جامعة طيبة · الأمن السيبراني</p><h1>خطتك الدراسية،<br><em>أوضح وأسهل.</em></h1><p class="hero-text">استعرض جميع المواد، افهم المتطلبات السابقة، وتابع رحلتك نحو التخرج.</p><div class="hero-actions"><a class="primary-action" href="#plan">استعرض الخطة <span>↓</span></a><a class="secondary-action" href="#nextSection">وش آخذ بعد؟</a></div></div>
+      <div class="hero-progress" id="progressSection" aria-label="تقدمك الدراسي"><div class="progress-ring"><span id="progress">0%</span></div><div><strong id="progressLabel">بداية المشوار</strong><span id="progressMeta">لم تُكمل أي مادة بعد</span></div></div>
     </section>
 
-    <section class="overview" aria-label="Degree overview"><div><span class="stat-label">COURSES</span><strong id="courseCount">—</strong></div><div><span class="stat-label">TERMS</span><strong>10</strong></div><div><span class="stat-label">CREDITS</span><strong id="creditCount">—</strong></div><div class="accent-stat"><span class="stat-label">AVAILABLE NOW</span><strong id="availableCount">0</strong></div></section>
+    <section class="overview" aria-label="ملخص الخطة"><div><span class="stat-label">المواد</span><strong id="courseCount">—</strong></div><div><span class="stat-label">الفصول</span><strong>10</strong></div><div><span class="stat-label">الساعات</span><strong id="creditCount">—</strong></div><div class="accent-stat"><span class="stat-label">متاحة الآن</span><strong id="availableCount">0</strong></div></section>
 
-    <section class="next-panel" id="nextSection" aria-labelledby="nextTitle"><div class="section-heading"><div><p class="eyebrow">WHAT'S NEXT</p><h2 id="nextTitle">Courses you can take now</h2></div><p class="hint">Based on prerequisites recorded in the curriculum</p></div><div id="availableCourses" class="available-grid"></div></section>
+    <section class="next-panel" id="nextSection" aria-labelledby="nextTitle"><div class="section-heading"><div><p class="eyebrow">الخطوة القادمة</p><h2 id="nextTitle">مواد تقدر تأخذها الآن</h2></div><p class="hint">حسب المتطلبات السابقة المسجلة في الخطة</p></div><div id="availableCourses" class="available-grid"></div></section>
 
     <section class="plan" id="plan">
-      <div class="section-heading"><div><p class="eyebrow">CURRICULUM</p><h2>Study plan</h2></div><p class="hint">Tap a course to see details</p></div>
-      <div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search courses…" aria-label="Search courses"></label><label class="select-wrap"><span>Term</span><select id="term"><option value="all">All terms</option></select></label><label class="select-wrap"><span>Status</span><select id="status"><option value="all">All courses</option><option value="available">Available now</option><option value="remaining">Remaining</option><option value="completed">Completed</option><option value="locked">Locked</option></select></label><button class="reset" id="reset" type="button">Reset progress</button></div>
-      <div class="legend"><span><i class="dot core"></i>Major / core</span><span><i class="dot elective"></i>Elective</span><span><i class="dot done"></i>Completed</span><span><i class="dot locked"></i>Prerequisite needed</span></div>
+      <div class="section-heading"><div><p class="eyebrow">الخطة الدراسية</p><h2>المقررات</h2></div><p class="hint">اضغط على المادة لمعرفة تفاصيلها</p></div>
+      <div class="toolbar"><label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="ابحث عن مادة…" aria-label="البحث عن مادة"></label><label class="select-wrap"><span>الفصل</span><select id="term"><option value="all">كل الفصول</option></select></label><label class="select-wrap"><span>الحالة</span><select id="status"><option value="all">كل المواد</option><option value="available">متاحة الآن</option><option value="remaining">متبقية</option><option value="completed">مكتملة</option><option value="locked">مقفلة</option></select></label><button class="reset" id="reset" type="button">إعادة التقدم</button></div>
+      <div class="legend"><span><i class="dot core"></i>تخصصية / أساسية</span><span><i class="dot elective"></i>اختيارية</span><span><i class="dot done"></i>مكتملة</span><span><i class="dot locked"></i>تحتاج متطلب</span></div>
       <section id="terms" class="terms" aria-live="polite"></section>
     </section>
   </main>
-  <footer><span>cyb-plan</span><span>Student-made planner · Always verify registration details with the university.</span></footer>
-  <dialog id="courseDialog"><button class="close" id="closeDialog" aria-label="Close course details">×</button><div id="courseDetails"></div></dialog>
+  <footer><span>cyb-plan</span><span>مشروع طلابي · تحقق دائماً من تفاصيل التسجيل الرسمية لدى الجامعة.</span></footer>
+  <dialog id="courseDialog"><button class="close" id="closeDialog" aria-label="إغلاق تفاصيل المادة">×</button><div id="courseDetails"></div></dialog>
   <script src="app.js"></script>
   <script>if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));</script>
 </body>
