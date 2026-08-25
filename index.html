@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Interactive Taibah University Cybersecurity degree planner">
+  <title>cyb-plan — Cybersecurity Degree Planner</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">TAIBAH UNIVERSITY</p>
+      <h1>Cybersecurity Degree Planner</h1>
+      <p class="subtitle">Explore the curriculum, prerequisites, and your progress.</p>
+    </div>
+    <a class="source" href="https://www.taibahu.edu.sa/en/admission-and-study/programs/cyber-security-0" target="_blank" rel="noreferrer">Official plan ↗</a>
+  </header>
+
+  <main class="container">
+    <section class="stats" aria-label="Degree statistics">
+      <article><span id="courseCount">—</span><small>Courses</small></article>
+      <article><span>10</span><small>Terms</small></article>
+      <article><span id="creditCount">—</span><small>Credits shown</small></article>
+      <article><span id="progress">0%</span><small>My progress</small></article>
+    </section>
+
+    <section class="toolbar">
+      <label>Search <input id="search" type="search" placeholder="Course code or name"></label>
+      <label>Term <select id="term"><option value="all">All terms</option></select></label>
+      <label>Show <select id="status"><option value="all">All courses</option><option value="remaining">Remaining</option><option value="completed">Completed</option></select></label>
+      <button id="reset" type="button">Reset progress</button>
+    </section>
+
+    <section id="terms" class="terms" aria-live="polite"></section>
+  </main>
+
+  <dialog id="courseDialog">
+    <button class="close" id="closeDialog" aria-label="Close">×</button>
+    <div id="courseDetails"></div>
+  </dialog>
+
+  <script src="app.js"></script>
+</body>
+</html>
