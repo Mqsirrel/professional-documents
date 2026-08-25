@@ -3,43 +3,76 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Interactive Taibah University Cybersecurity degree planner">
-  <title>cyb-plan — Cybersecurity Degree Planner</title>
+  <meta name="theme-color" content="#07111f">
+  <meta name="description" content="Student-friendly interactive Cybersecurity degree planner for Taibah University.">
+  <title>cyb-plan — Taibah Cybersecurity Planner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <header class="topbar">
-    <div>
-      <p class="eyebrow">TAIBAH UNIVERSITY</p>
-      <h1>Cybersecurity Degree Planner</h1>
-      <p class="subtitle">Explore the curriculum, prerequisites, and your progress.</p>
-    </div>
-    <a class="source" href="https://www.taibahu.edu.sa/en/admission-and-study/programs/cyber-security-0" target="_blank" rel="noreferrer">Official plan ↗</a>
+  <header class="nav">
+    <a class="brand" href="."><span class="brand-mark">CP</span><span>cyb<span class="brand-dot">·</span>plan</span></a>
+    <nav aria-label="Primary navigation">
+      <a class="active" href="#plan">Study plan</a>
+      <a href="#progressSection">My progress</a>
+    </nav>
+    <a class="official" href="https://www.taibahu.edu.sa/en/admission-and-study/programs/cyber-security-0" target="_blank" rel="noreferrer">Official plan <span>↗</span></a>
   </header>
 
-  <main class="container">
-    <section class="stats" aria-label="Degree statistics">
-      <article><span id="courseCount">—</span><small>Courses</small></article>
-      <article><span>10</span><small>Terms</small></article>
-      <article><span id="creditCount">—</span><small>Credits shown</small></article>
-      <article><span id="progress">0%</span><small>My progress</small></article>
+  <main>
+    <section class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">TAIBAH UNIVERSITY · CYBERSECURITY</p>
+        <h1>Your degree,<br><em>made clearer.</em></h1>
+        <p class="hero-text">Explore every course, understand prerequisites, and keep track of your journey to graduation.</p>
+      </div>
+      <div class="hero-progress" id="progressSection" aria-label="Your degree progress">
+        <div class="progress-ring"><span id="progress">0%</span></div>
+        <div><strong id="progressLabel">Just getting started</strong><span id="progressMeta">0 courses completed</span></div>
+      </div>
     </section>
 
-    <section class="toolbar">
-      <label>Search <input id="search" type="search" placeholder="Course code or name"></label>
-      <label>Term <select id="term"><option value="all">All terms</option></select></label>
-      <label>Show <select id="status"><option value="all">All courses</option><option value="remaining">Remaining</option><option value="completed">Completed</option></select></label>
-      <button id="reset" type="button">Reset progress</button>
+    <section class="overview" aria-label="Degree overview">
+      <div><span class="stat-label">COURSES</span><strong id="courseCount">—</strong></div>
+      <div><span class="stat-label">TERMS</span><strong>10</strong></div>
+      <div><span class="stat-label">CREDITS</span><strong id="creditCount">—</strong></div>
+      <div class="accent-stat"><span class="stat-label">COMPLETED</span><strong id="completedCount">0</strong></div>
     </section>
 
-    <section id="terms" class="terms" aria-live="polite"></section>
+    <section class="plan" id="plan">
+      <div class="section-heading">
+        <div>
+          <p class="eyebrow">CURRICULUM</p>
+          <h2>Study plan</h2>
+        </div>
+        <p class="hint">Tap a course to see details</p>
+      </div>
+
+      <div class="toolbar">
+        <label class="search"><span aria-hidden="true">⌕</span><input id="search" type="search" placeholder="Search courses…" aria-label="Search courses"></label>
+        <label class="select-wrap"><span>Term</span><select id="term"><option value="all">All terms</option></select></label>
+        <label class="select-wrap"><span>Status</span><select id="status"><option value="all">All courses</option><option value="remaining">Remaining</option><option value="completed">Completed</option></select></label>
+        <button class="reset" id="reset" type="button">Reset progress</button>
+      </div>
+
+      <div class="legend" aria-label="Course status legend">
+        <span><i class="dot core"></i>Major / core</span>
+        <span><i class="dot elective"></i>Elective</span>
+        <span><i class="dot done"></i>Completed</span>
+      </div>
+
+      <section id="terms" class="terms" aria-live="polite"></section>
+    </section>
   </main>
 
+  <footer><span>cyb-plan</span><span>Student-made planner · Always verify registration details with the university.</span></footer>
+
   <dialog id="courseDialog">
-    <button class="close" id="closeDialog" aria-label="Close">×</button>
+    <button class="close" id="closeDialog" aria-label="Close course details">×</button>
     <div id="courseDetails"></div>
   </dialog>
-
   <script src="app.js"></script>
 </body>
 </html>
