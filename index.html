@@ -2,14 +2,31 @@
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#07111f">
-  <meta name="description" content="Student-friendly interactive Cybersecurity degree planner for Taibah University.">
-  <title>cyb-plan — Taibah Cybersecurity Planner</title>
+  <meta name="description" content="Interactive degree planner for Taibah University's Cybersecurity program. Explore courses, prerequisites, and your path to graduation.">
+  <meta name="application-name" content="cyb-plan">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="cyb-plan">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="cyb-plan — Taibah Cybersecurity Planner">
+  <meta property="og:description" content="Explore the Cybersecurity degree plan, understand prerequisites, and track your progress to graduation.">
+  <meta property="og:url" content="https://mqsirrel.github.io/cyb-plan/">
+  <meta property="og:image" content="https://mqsirrel.github.io/cyb-plan/icons/icon-512.svg">
+  <meta property="og:image:alt" content="cyb-plan app icon">
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:title" content="cyb-plan — Taibah Cybersecurity Planner">
+  <meta name="twitter:description" content="Interactive Cybersecurity degree planner for Taibah University students.">
+  <meta name="twitter:image" content="https://mqsirrel.github.io/cyb-plan/icons/icon-512.svg">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="icon" href="icons/icon-192.svg" type="image/svg+xml">
+  <link rel="apple-touch-icon" href="icons/icon-192.svg">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <title>cyb-plan — Taibah Cybersecurity Planner</title>
 </head>
 <body>
   <header class="nav">
@@ -20,7 +37,7 @@
 
   <main>
     <section class="hero">
-      <div class="hero-copy"><p class="eyebrow">TAIBAH UNIVERSITY · CYBERSECURITY</p><h1>Your degree,<br><em>made clearer.</em></h1><p class="hero-text">Explore every course, understand prerequisites, and keep track of your journey to graduation.</p></div>
+      <div class="hero-copy"><p class="eyebrow">TAIBAH UNIVERSITY · CYBERSECURITY</p><h1>Your degree,<br><em>made clearer.</em></h1><p class="hero-text">Explore every course, understand prerequisites, and keep track of your journey to graduation.</p><div class="hero-actions"><a class="primary-action" href="#plan">Explore study plan <span>↓</span></a><a class="secondary-action" href="#nextSection">See what's next</a></div></div>
       <div class="hero-progress" id="progressSection" aria-label="Your degree progress"><div class="progress-ring"><span id="progress">0%</span></div><div><strong id="progressLabel">Just getting started</strong><span id="progressMeta">0 courses completed</span></div></div>
     </section>
 
@@ -36,8 +53,8 @@
     </section>
   </main>
   <footer><span>cyb-plan</span><span>Student-made planner · Always verify registration details with the university.</span></footer>
-
   <dialog id="courseDialog"><button class="close" id="closeDialog" aria-label="Close course details">×</button><div id="courseDetails"></div></dialog>
   <script src="app.js"></script>
+  <script>if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(console.error));</script>
 </body>
 </html>
