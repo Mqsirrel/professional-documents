@@ -1,0 +1,66 @@
+{
+  "program": {
+    "name": "Cybersecurity",
+    "university": "Taibah University",
+    "durationYears": 5,
+    "terms": 10,
+    "source": "https://www.taibahu.edu.sa/en/admission-and-study/programs/cyber-security-0"
+  },
+  "courses": [
+    {"code":"GS 111","name":"Arabic Language Skills I","term":1,"credits":2,"type":"Plan"},
+    {"code":"ENG 101","name":"English Language Skills I","term":1,"credits":4,"type":"Plan"},
+    {"code":"GS 101","name":"Islamic Studies: Belief and Worship","term":1,"credits":2,"type":"Plan"},
+    {"code":"CHEM 101","name":"Introduction to Chemistry","term":1,"credits":3,"type":"Plan"},
+    {"code":"MATH 101","name":"Introduction to Mathematics","term":1,"credits":3,"type":"Plan"},
+
+    {"code":"PHYS 101","name":"Introduction to Physics","term":2,"credits":3,"type":"Plan"},
+    {"code":"BIOL 101","name":"Introduction to Biology","term":2,"credits":3,"type":"Plan"},
+    {"code":"GS 152","name":"Computer Skills","term":2,"credits":2,"type":"Plan"},
+    {"code":"ENG 102","name":"English Language Skills II","term":2,"credits":4,"type":"Plan"},
+    {"code":"GS 151","name":"University Life Skills","term":2,"credits":2,"type":"Plan"},
+
+    {"code":"ENGL 103","name":"English Composition","term":3,"credits":3,"type":"Plan"},
+    {"code":"CS 103","name":"Discrete Structures","term":3,"credits":3,"type":"Plan"},
+    {"code":"PHYS 103","name":"Physics I","term":3,"credits":4,"type":"Plan"},
+    {"code":"MATH 203","name":"Calculus I","term":3,"credits":3,"type":"Plan"},
+    {"code":"CS 111","name":"Programming I","term":3,"credits":4,"type":"Plan"},
+
+    {"code":"CS 112","name":"Programming II","term":4,"credits":4,"type":"Plan","prerequisites":["CS 111"]},
+    {"code":"CYB 152","name":"IT Systems Components","term":4,"credits":3,"type":"Plan"},
+    {"code":"IS 102","name":"Foundations of Information Systems","term":4,"credits":3,"type":"Plan"},
+    {"code":"MATH 204","name":"Calculus II","term":4,"credits":3,"type":"Plan"},
+    {"code":"ENGL 104","name":"Technical Communication","term":4,"credits":3,"type":"Plan"},
+
+    {"code":"CS 211","name":"Algorithms and Data Structures","term":5,"credits":4,"type":"Plan"},
+    {"code":"GS 102","name":"Islamic Studies: Features of the Prophet’s Biography","term":5,"credits":2,"type":"Plan"},
+    {"code":"CYB 281","name":"Cybersecurity Fundamentals","term":5,"credits":3,"type":"Plan"},
+    {"code":"CYB 253","name":"Computer Networking and Protocols","term":5,"credits":4,"type":"Plan"},
+    {"code":"MATH 243","name":"Linear Algebra I","term":5,"credits":3,"type":"Plan"},
+
+    {"code":"CS 289","name":"Software Engineering","term":6,"credits":4,"type":"Plan"},
+    {"code":"CYB 270","name":"Cryptography","term":6,"credits":3,"type":"Plan"},
+    {"code":"GS 112","name":"Arabic Language Skills II","term":6,"credits":2,"type":"Plan"},
+    {"code":"CS 372","name":"Database Systems","term":6,"credits":4,"type":"Plan"},
+    {"code":"ENGL 214","name":"Technical Writing","term":6,"credits":3,"type":"Plan"},
+
+    {"code":"CYB 345","name":"Operating Systems","term":7,"credits":3,"type":"Plan"},
+    {"code":"GSE 1","name":"University Elective Course I","term":7,"credits":2,"type":"University Elective"},
+    {"code":"CYB 325","name":"Web Application Development","term":7,"credits":4,"type":"Plan"},
+    {"code":"STAT 301","name":"Probability and Statistics for Engineers","term":7,"credits":3,"type":"Plan"},
+    {"code":"CYB 333","name":"Cyber Threats","term":7,"credits":3,"type":"Plan"},
+
+    {"code":"CYB 365","name":"Network Security","term":8,"credits":3,"type":"Plan","prerequisites":["CYB 253"]},
+    {"code":"GS 103","name":"Islamic Studies: Human Rights in Islam","term":8,"credits":2,"type":"Plan"},
+    {"code":"CYB 350","name":"Software Security","term":8,"credits":3,"type":"Plan","prerequisites":["CYB 281","CS 289"]},
+
+    {"code":"CYB 432","name":"Cyber Forensics","term":9,"credits":3,"type":"Plan"},
+    {"code":"GS 104","name":"Islamic Studies: Islamic Values and Ethics","term":9,"credits":2,"type":"Plan"},
+    {"code":"CYB 1","name":"Specialization Elective I","term":9,"credits":3,"type":"Program Elective"},
+    {"code":"CYB 482","name":"Operating Systems Security","term":9,"credits":3,"type":"Plan"},
+
+    {"code":"CYB 2","name":"Specialization Elective II","term":10,"credits":3,"type":"Program Elective"},
+    {"code":"CYB 3","name":"Specialization Elective III","term":10,"credits":3,"type":"Program Elective"},
+    {"code":"IS 482","name":"Computing Ethics and Society","term":10,"credits":1,"type":"Plan"},
+    {"code":"GSE 2","name":"University Elective Course II","term":10,"credits":2,"type":"University Elective"}
+  ]
+}
