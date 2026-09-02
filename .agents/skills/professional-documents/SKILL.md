@@ -1,149 +1,234 @@
 ---
 name: professional-documents
-description: Creates, redesigns, edits, and quality-checks professional DOCX, PDF, and document artifacts. Use for reports, assignments, research papers, proposals, resumes, study plans, and any request where document layout and visual quality matter.
+version: 2.0-k3-inspired
+description: Kimi K3-informed professional document agent workflow for creating, redesigning, editing, rendering, inspecting, and iterating DOCX, PDF, and other Office artifacts. Use whenever document quality, layout, visual design, or file generation matters.
 ---
 
-# Professional Documents
+# Professional Documents — K3-Informed Workflow
 
-You are a document designer, information architect, and document engineer. Treat the output as a finished visual artifact, not merely text placed inside a file.
+This skill is intentionally based on **Kimi K3-era Agent/Office behavior**, not older Kimi K2/K2.5-era assumptions.
 
-## Core objective
+Moonshot's current documentation identifies Kimi Agent as K3-powered and describes end-to-end Word/PDF/Excel/PPT generation, autonomous planning, tool invocation, error recovery, and deliverable handoff. K3 also provides native vision and office-document understanding. This skill transfers the observable workflow and quality gates that can be reproduced in another agent; it does not claim to reproduce K3's model weights or proprietary internals.
 
-Produce documents that are:
-- structurally correct
-- visually intentional
-- readable at normal viewing/printing size
-- editable when the format supports it
-- consistent across pages
-- appropriate for the audience and document type
+## What this skill is trying to reproduce
 
-A file opening successfully is not a quality pass.
+The target behavior is not simply "generate a DOCX." It is:
+
+**Plan → research/inspect → design → build → render → visually understand → critique → revise → render again → validate → deliver**
+
+The agent should behave like a document specialist who can both design and engineer the artifact.
+
+## K3-era operating principles
+
+### 1. Treat the artifact as the objective
+The final rendered document matters more than the code used to produce it.
+
+A technically valid DOCX can still be a poor deliverable.
+
+### 2. Work autonomously through the whole task
+Do not stop after the first successful file creation. Continue through rendering, inspection, correction, and validation when the environment supports those operations.
+
+### 3. Use visual understanding as part of the loop
+When page images, PDFs, screenshots, or document previews are available, inspect them as visual artifacts. Do not infer visual quality solely from extracted text or source code.
+
+### 4. Self-correct
+When rendering, parsing, conversion, or formatting produces an error:
+- diagnose it
+- adjust the implementation
+- retry
+- verify the corrected result
+
+Do not hand the user an intermediate artifact merely because generation technically completed.
+
+### 5. Long-horizon execution
+Break complex document jobs into explicit stages and maintain a checklist of completed and pending work. Preserve the source of truth so later revisions do not silently lose content.
 
 ## Mandatory workflow
 
-### 1. Understand before building
-Identify:
+### Phase A — Task decomposition
+Before touching the document, identify:
 - purpose
 - audience
 - document type
+- desired tone
+- language and RTL/LTR requirements
+- source files
+- factual constraints
 - expected length
-- required sections
-- source material
-- language and reading direction
-- whether the user expects academic, technical, business, or visual styling
+- required output formats
+- whether this is creation, redesign, conversion, editing, or review
 
-Do not invent factual content. If source material is incomplete, preserve uncertainty rather than filling gaps with fabricated facts.
+For complex tasks, create a short internal execution plan and update it as work progresses.
 
-### 2. Design the information architecture
-Decide the hierarchy before formatting:
-- title and subtitle
+### Phase B — Inspect existing material
+If an existing DOCX/PDF/template is provided:
+- inspect its structure
+- inspect styles and layout
+- identify reusable components
+- identify content that must remain unchanged
+- identify weaknesses before redesigning
+
+Do not destroy a useful existing structure simply because a new implementation is easier.
+
+### Phase C — Information architecture
+Design the document before styling it.
+
+Determine:
+- title hierarchy
+- section hierarchy
 - front matter
-- sections and subsections
-- callouts
+- navigation/TOC
 - tables
-- figures/diagrams
-- references/appendices
+- figures
+- callouts
+- references
+- appendices
+- page-break strategy
 
-Prefer a clear hierarchy over decorative formatting.
+The hierarchy should make the document understandable before decoration is considered.
 
-### 3. Establish a visual system
-Define a small coherent design system before generating pages:
+### Phase D — Art direction
+Create a coherent visual language before generating the pages.
+
+Choose intentionally:
 - typography roles
 - heading scale
-- body size and line height
-- paragraph spacing
-- page margins
+- body scale
+- line height
+- paragraph rhythm
+- margins
+- grid/alignment
 - table treatment
-- accent color(s)
+- accent palette
 - header/footer system
 - numbering
-- page-break policy
+- cover composition
 
-Use restraint. Avoid generic AI-looking decoration, excessive cards, arbitrary gradients, oversized headings, and inconsistent styles.
+Do not default to generic AI aesthetics. Avoid unnecessary gradients, excessive rounded cards, random icons, arbitrary color changes, oversized headings, or decoration without communicative purpose.
 
-### 4. Build with the strongest available tooling
-Use native document structures where possible:
-- real Word heading styles
+For redesign requests, preserve the user's information architecture unless improving it is clearly part of the request.
+
+### Phase E — Build the document
+Prefer semantic/native Office structures:
+- Word heading styles
+- real numbered/bulleted lists
 - real tables
-- real page numbers
 - real headers/footers
-- real lists
-- real TOC fields where supported
-- editable charts/figures where appropriate
+- real page numbers
+- TOC fields where appropriate
+- editable charts where appropriate
+- proper captions and cross-references
+- correct document metadata
 
-Use OpenXML/XML-level editing when higher-level libraries cannot reliably express the required formatting.
+Use high-level DOCX libraries for ordinary construction and OpenXML/XML editing when precise Word behavior requires it.
 
-### 5. Render the artifact
-After creating or substantially modifying a DOCX/PDF, render it to PDF or page images using the tools available in the environment.
+### Phase F — Render
+After creating or substantially changing a document, render it to PDF and/or page images using the available environment.
 
-Never rely only on source-code inspection or text extraction.
+Determine available rendering tools from the environment rather than assuming a specific command exists.
 
-### 6. Perform visual QA
-Inspect the rendered pages, preferably page-by-page. Look specifically for:
-- awkward page breaks
-- orphaned headings
-- excessive blank space
-- cramped sections
-- inconsistent margins
-- table overflow
+### Phase G — Visual inspection
+Inspect the rendered artifact.
+
+Check every page when practical, with special attention to:
+- cover
+- section transitions
+- dense tables
+- figures
+- references
+- pages with unusual whitespace
+- pages affected by recent edits
+
+Look for:
 - clipped text
-- broken numbering
-- inconsistent font sizes
-- weak visual hierarchy
+- overflow
+- broken alignment
+- orphan headings
+- bad page breaks
+- excessive whitespace
+- cramped content
+- inconsistent margins
+- inconsistent typography
+- poor table proportions
+- split rows that harm readability
+- captions detached from figures
 - headers/footers colliding with content
-- captions separated from figures
-- rows split in bad places
-- nearly-empty pages
-- visually unbalanced covers
-- RTL/LTR alignment problems
+- weak hierarchy
+- repetitive or visually monotonous pages
+- pages that look unfinished
+- Arabic/English direction problems
 
-### 7. Iterate
-Fix the source document, render again, and inspect again.
+### Phase H — Design critique
+Do not merely ask "does it work?"
 
-Do not stop after one pass when obvious visual problems remain.
+Ask:
+- What is the eye supposed to see first?
+- Is the hierarchy obvious within seconds?
+- Does the visual rhythm remain coherent across pages?
+- Is whitespace intentional?
+- Does every decorative element serve a purpose?
+- Does the document look appropriate for its audience?
+- Would a professor, client, researcher, or manager consider it professionally designed?
 
-### 8. Final validation
-Before declaring success, verify:
-- file opens correctly
-- required content is present
-- page count is sensible
-- no text is clipped or missing
-- tables fit their page boundaries
-- headings follow a coherent hierarchy
-- references and numbering are consistent
-- visual system is consistent
-- final rendered pages look deliberate rather than mechanically generated
+### Phase I — Iterate
+Fix the source artifact, not merely the rendered image.
 
-## Design principles
+Then:
 
-### Typography
-Use a limited type system. Establish clear roles instead of changing fonts for decoration.
+**render → inspect → revise → render → inspect**
 
-### Spacing
-Whitespace is part of the hierarchy. Use consistent spacing tokens rather than random margins.
+Repeat until the significant visual defects are resolved.
 
-### Tables
-Tables should be optimized for scanning. Keep headers visually distinct, avoid unnecessary borders, and prevent rows from becoming unreadably dense.
+### Phase J — Final validation
+Validate both semantics and appearance:
+- requested content present
+- no accidental duplication/omission
+- document opens successfully
+- expected output files exist
+- headings are semantic and consistent
+- numbering is correct
+- tables fit
+- references are consistent
+- no clipping or overflow
+- visual system is coherent
+- final rendered artifact has passed visual inspection
 
-### Covers
-A cover should communicate identity, title, purpose, and metadata with strong composition. Do not fill empty space with decoration just to make the page look busy.
+## Document-type intelligence
 
-### Long documents
-Design for rhythm across pages. A good page is not necessarily a good document; evaluate transitions and consistency across the entire artifact.
+### Academic / university
+Prioritize credibility, readability, citation structure, consistent headings, restrained visual styling, and easy navigation.
 
-### Arabic and RTL
-When the document is Arabic or mixed Arabic/English:
-- use RTL paragraph and table direction correctly
-- preserve LTR treatment for code, URLs, identifiers, and technical tokens
-- test mixed-script alignment after rendering
-- do not assume visual correctness from source markup alone
+### Technical report
+Prioritize scanability, diagrams, tables, terminology, code/identifier treatment, and precise section hierarchy.
 
-## Decision rule
+### Business report
+Prioritize executive scanning, concise visual summaries, strong page rhythm, and clear decision-relevant information.
 
-When choosing between a technically clever implementation and a simpler implementation that produces a more reliable, editable, visually correct document, prefer the latter.
+### Resume/CV
+Prioritize information density, hierarchy, ATS-safe semantics where relevant, alignment, and restrained visual differentiation.
 
-## Completion rule
+### Study plan / roadmap
+Prioritize progression, dependencies, milestones, tables, timelines, and quick scanning.
 
-The task is complete only when the final artifact has passed both:
-1. structural/technical validation
-2. visual inspection of the rendered result
+## Arabic and mixed-script requirements
+
+For Arabic or mixed Arabic/English documents:
+- use true RTL paragraph and table direction
+- keep English identifiers, URLs, code, and technical tokens LTR where appropriate
+- test punctuation and numeric ordering visually
+- check mixed-script table cells independently
+- never assume correct RTL rendering from source text alone
+
+## Quality gate
+
+A document must not be declared finished merely because:
+- the DOCX opens
+- the script exits successfully
+- the PDF converts successfully
+- the text is complete
+
+It is finished only when **content, structure, and rendered visual presentation** all pass inspection.
+
+## Important boundary
+
+This is a K3-informed workflow, not a claim of access to Kimi K3's private system prompts, hidden tools, weights, or proprietary Office implementation. Use public K3-era capabilities and observable Agent/Office patterns as the design target.
