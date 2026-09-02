@@ -1,55 +1,185 @@
-# Document Design System
+# K3 Document Design System
 
-Use this as an art-direction checklist, not a rigid template.
+This is an art-direction system, not a template. The agent should make deliberate design decisions from the document's purpose, audience, and content.
 
-## Visual hierarchy
+## 1. Design before formatting
 
-1. Document title: strongest visual element.
-2. Section headings: clearly subordinate to title and consistent across the document.
-3. Subheadings: visually distinct but not competing with sections.
-4. Body: quiet, highly readable baseline.
-5. Supporting elements: captions, metadata, notes, references.
+Create a visual brief before building:
 
-## Page composition
+- **Audience:** professor, researcher, executive, client, student, public reader, etc.
+- **Tone:** formal, editorial, technical, modern, institutional, understated, etc.
+- **Information density:** sparse / medium / dense.
+- **Primary action:** read deeply, scan, compare, decide, study, reference, or present.
+- **Visual character:** choose one coherent direction rather than mixing unrelated styles.
 
-Every page should have a deliberate balance of content and whitespace. Avoid both extremes:
-- dense walls of text
-- large empty regions caused by arbitrary manual page breaks
+The document should have a recognizable visual identity before individual pages are produced.
 
-Prefer natural flow with intentional breaks at major sections.
+## 2. The hierarchy system
 
-## Color
+Use a small number of semantic levels with visibly predictable differences:
 
-Use a restrained palette. One primary accent plus neutral text/background tones is usually sufficient. Color must communicate hierarchy or grouping, not exist merely for decoration.
+1. Document title — strongest element.
+2. Section / H1 — establishes major navigation.
+3. Subsection / H2 — organizes content.
+4. Minor heading / H3 — local structure.
+5. Body — quiet baseline optimized for reading.
+6. Supporting text — captions, metadata, notes, references.
 
-## Tables
+Do not make hierarchy depend on color alone. Size, weight, spacing, alignment, and placement should reinforce it.
 
-- Keep column labels concise.
-- Align numeric values consistently.
-- Use enough cell padding for scanning.
-- Avoid tiny text to force a table onto a page; redesign the table instead.
-- Repeat table headers when a table spans pages.
+## 3. Grid and rhythm
 
-## Figures
+Choose a consistent page grid before placing content.
 
-Figures should have captions and should be referenced from the surrounding text when appropriate. Keep figure and caption together whenever possible.
+- Keep left/right margins stable.
+- Align headings, body text, tables, figures, and captions to intentional grid lines.
+- Use a repeatable spacing scale rather than arbitrary paragraph gaps.
+- Use whitespace to separate concepts, not to compensate for weak hierarchy.
+- Avoid manual page breaks unless they express a meaningful structural transition.
 
-## Cover design
+A good page should feel composed even when most of it is text.
 
-A strong cover establishes:
-- title
-- subtitle/context when useful
-- author/owner
-- institution/company/course when relevant
-- date/version when relevant
+## 4. Typography
 
-Use whitespace intentionally. Do not add decorative objects unless they reinforce the document's identity.
+Choose fonts for the actual language and environment. Never assume a font exists.
 
-## Quality heuristic
+Define roles rather than scattering font choices:
 
-Ask after rendering:
-- Can I understand the document structure in three seconds?
-- Is the eye naturally guided from title to section to content?
-- Does any element look accidental?
-- Does every page feel like it belongs to the same document?
-- Would this look credible if printed and handed to a professor, manager, or client?
+- display/title
+- section headings
+- body
+- captions/metadata
+- tables/data
+- code/technical identifiers
+
+Prefer readable body text and moderate heading contrast. Avoid decorative fonts for technical or academic work.
+
+For Arabic:
+- verify Arabic glyph quality and weight availability;
+- use true RTL paragraph direction;
+- test Arabic numerals, Latin identifiers, URLs, punctuation, and mixed-script cells;
+- do not force an Arabic typeface into English code or identifiers when an appropriate LTR font is needed.
+
+## 5. Color system
+
+Use a restrained palette:
+
+- neutral background/text colors
+- one primary accent
+- optionally one secondary accent for semantic distinction
+
+Color should communicate hierarchy, category, status, or emphasis. It should not be used to decorate every component.
+
+Good directions include academic navy/ivory, restrained monochrome, editorial earth tones, technical cool neutrals, or a muted regional palette. Choose based on context.
+
+Avoid default Office blue, rainbow palettes, excessive gradients, neon accents, and low-contrast text.
+
+## 6. Component language
+
+Repeated elements must look related:
+
+- tables share a table grammar;
+- callouts share padding/border/radius rules;
+- captions share typography;
+- headers/footers share alignment and spacing;
+- figures use consistent numbering and caption placement.
+
+Do not turn every paragraph into a card. Use borders, fills, icons, or containers only when they improve grouping or scanning.
+
+## 7. Page archetypes
+
+Choose page compositions according to content rather than forcing one layout everywhere:
+
+- **Cover:** identity + title + essential metadata, with intentional negative space.
+- **Executive summary:** key message + compact evidence/metrics.
+- **Standard reading page:** heading + body + restrained supporting elements.
+- **Comparison page:** aligned columns/table + concise interpretation.
+- **Data page:** chart/figure + takeaway + supporting detail.
+- **Procedure page:** numbered steps + diagrams/tables where useful.
+- **Reference page:** dense but highly structured citations.
+- **Appendix:** functional, less decorative, easy to navigate.
+
+Variation should come from content structure, not random visual styling.
+
+## 8. Anti-slop rules
+
+Reject these unless explicitly justified by the brief:
+
+- generic SaaS/dashboard aesthetics in formal documents;
+- excessive rounded cards;
+- huge headings consuming page area;
+- decorative gradients with no semantic purpose;
+- random icons beside every heading;
+- multiple unrelated accent colors;
+- fake statistics or decorative charts;
+- giant empty areas created by manual breaks;
+- tiny text used to rescue an overloaded table;
+- inconsistent corner radii, shadows, or border weights;
+- repeated hero-style layouts on every page.
+
+When uncertain, prefer clarity, hierarchy, typography, alignment, and whitespace.
+
+## 9. Tables and data
+
+Tables are information architecture, not decoration.
+
+- Keep columns purposeful.
+- Use concise headers.
+- Align numbers consistently.
+- Give cells enough padding.
+- Repeat header rows across pages.
+- Avoid vertical borders when a lighter treatment is clearer.
+- Split or restructure oversized tables instead of shrinking text excessively.
+- Prefer editable/native charts when appropriate.
+- Every chart must answer a question; do not add charts merely to make pages look designed.
+
+## 10. Pagination
+
+Before final delivery, inspect page transitions deliberately.
+
+Prevent:
+
+- orphan headings;
+- isolated single lines;
+- captions separated from figures;
+- awkward table splits;
+- headings stranded at page bottoms;
+- excessive blank regions;
+- headers/footers colliding with body content.
+
+Use semantic pagination controls where supported: keep-with-next, keep-lines-together, repeated table headers, and meaningful section breaks.
+
+## 11. Visual QA score
+
+After rendering, score each dimension from 0–2:
+
+| Dimension | 0 | 1 | 2 |
+|---|---|---|---|
+| Hierarchy | unclear | mostly clear | immediately clear |
+| Typography | inconsistent | acceptable | polished |
+| Alignment | visibly broken | mostly aligned | intentional grid |
+| Spacing | cramped/empty | acceptable | deliberate rhythm |
+| Tables | hard to scan | usable | highly scannable |
+| Pagination | distracting | minor issues | clean |
+| Consistency | inconsistent | mostly consistent | coherent system |
+| Audience fit | wrong tone | acceptable | strongly appropriate |
+| RTL/mixed script | broken | minor issues | verified |
+| Finish | unfinished | good | publication-ready |
+
+Do not call the artifact finished if a critical category scores 0. Iterate when the visual result is merely "acceptable" but the task calls for a polished professional deliverable.
+
+## 12. The visual loop
+
+**Build → render → inspect → identify the 3 highest-impact defects → fix → render again → inspect again.**
+
+Prioritize structural defects over decoration:
+
+1. overflow/clipping
+2. broken hierarchy
+3. bad pagination
+4. alignment/grid problems
+5. typography/readability
+6. table/figure problems
+7. color/detail polish
+
+The rendered artifact is the source of truth for visual quality.
