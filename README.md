@@ -1,33 +1,33 @@
-# cyb-plan
+# Professional Documents for Antigravity
 
-Interactive degree planner for the **Taibah University Cybersecurity program**.
+This repository is being repurposed as a document-engineering skill pack for Google Antigravity/Gemini.
 
-The goal is to turn the official study plan into something a student can actually use: understand prerequisites, explore the degree structure, track completed courses, and plan future semesters.
+## Goal
 
-## Planned features
+Give Gemini a stronger professional-document workflow for DOCX/PDF work: information architecture, visual art direction, native document engineering, rendering, visual QA, and iterative redesign.
 
-- Official curriculum data in structured JSON
-- Semester-by-semester degree map
-- Course explorer
-- Prerequisite dependency graph
-- Progress tracking
-- Next-semester eligibility checks
-- What-if analysis for delayed courses
-- Elective exploration
+The central rule is:
 
-## Project principles
+> A document is not finished when the file is generated. It is finished when the rendered artifact passes structural and visual QA.
 
-1. **Official data first** — curriculum information should come from Taibah University sources.
-2. **No invented prerequisites** — unknown relationships stay unknown until verified.
-3. **Logic before UI** — prerequisite and planning rules should be testable independently of the web interface.
-4. **Student-first** — every feature should answer a real planning question.
+## Skill
 
-## Current source
+`.agents/skills/professional-documents/SKILL.md`
 
-The curriculum is based on the current Taibah University Cybersecurity program page and individual course pages. The university page currently lists a 5-year plan with 10 terms and publishes course codes, names, credit units, and course structure.
+Supporting references:
 
-- https://www.taibahu.edu.sa/en/admission-and-study/programs/cyber-security-0
+- `references/design-system.md` — hierarchy, typography, spacing, tables, covers, figures, RTL.
+- `references/qa-checklist.md` — page-by-page visual QA criteria.
+- `references/tooling.md` — DOCX/OpenXML/rendering strategy.
 
-## Status
+## Installation
 
-Early MVP. The repository currently establishes the data model and static planner foundation; verified prerequisite coverage will be expanded course-by-course.
+Because this repository follows Antigravity's workspace skill layout, clone/open it as a workspace and the skill is available under:
+
+`.agents/skills/professional-documents/`
+
+Antigravity supports workspace skills in `<workspace>/.agents/skills/<skill-folder>/`. Skills are loaded when the agent determines the task matches the skill description.
+
+## Design philosophy
+
+This is inspired by the strongest patterns in modern document agents, but it does not attempt to reproduce any proprietary model or hidden implementation. The focus is on transferring the observable workflow: design deliberately, build with native document structures, render, inspect, critique, and iterate.
