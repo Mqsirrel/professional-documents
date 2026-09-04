@@ -1,0 +1,5 @@
+__pycache__/
+*.py[cod]
+*$py.class
+test_output/
+.agents/skills/professional-documents/scripts/test_output/

@@ -16,9 +16,13 @@ The central rule is:
 
 Supporting references:
 
-- `references/design-system.md` — hierarchy, typography, spacing, tables, covers, figures, RTL.
+- `references/design-system.md` — hierarchy, typographic scale tokens, spacing, hex palettes, tables, covers, figures, RTL.
+- `references/docx-recipes.md` — concrete design tokens, hex palettes, OpenXML recipes, and python-docx component patterns.
+- `references/art-direction-playbook.md` — choosing a visual concept, page archetypes, density management, and redesign protocol.
+- `references/design-taste-docx.md` — judgment layer, spatial rhythm, and anti-slop audit.
 - `references/qa-checklist.md` — page-by-page visual QA criteria.
-- `references/tooling.md` — DOCX/OpenXML/rendering strategy.
+- `references/tooling.md` — CLI execution commands, headless LibreOffice rendering, and pdftoppm image extraction.
+- `scripts/docx_craft.py` — production-ready python helper library for page geometry, typography scales, table engineering (repeating headers, padding, no split), callouts, and dynamic page numbering.
 
 ## Installation
 

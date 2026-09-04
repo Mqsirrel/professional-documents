@@ -39,40 +39,74 @@ Choose a consistent page grid before placing content.
 
 A good page should feel composed even when most of it is text.
 
-## 4. Typography
+## 4. Typography & Typographic Scale
 
 Choose fonts for the actual language and environment. Never assume a font exists.
 
-Define roles rather than scattering font choices:
+Standard Font Presets:
+- **Modern / Clean**: Segoe UI / Aptos (headings & body), Consolas (code)
+- **Executive**: Aptos Display / Aptos, or Calibri / Calibri Light
+- **Academic**: Georgia / Garamond / Times New Roman, Courier New (code)
+- **Arabic / Mixed**: Amiri / Cairo / Tahoma / Arial (body & headings)
 
-- display/title
-- section headings
-- body
-- captions/metadata
-- tables/data
-- code/technical identifiers
+### Concrete Typographic Scale & Spacing Scale
 
-Prefer readable body text and moderate heading contrast. Avoid decorative fonts for technical or academic work.
+| Role | Font Size | Weight | Line Spacing | Space Before | Space After | Keep With Next |
+|---|---|---|---|---|---|---|
+| **Document Title** | 28–32 pt | Bold | 1.1x | 36 pt | 12 pt | Yes |
+| **Subtitle** | 13–14 pt | Regular / Italic | 1.15x | 0 pt | 36–48 pt | Yes |
+| **Heading 1 (H1)** | 18–20 pt | Bold | 1.15x | 18–22 pt | 6 pt | **Yes (Mandatory)** |
+| **Heading 2 (H2)** | 14–15 pt | Bold | 1.15x | 14–16 pt | 4 pt | **Yes (Mandatory)** |
+| **Heading 3 (H3)** | 12–13 pt | SemiBold | 1.15x | 10–12 pt | 3 pt | **Yes (Mandatory)** |
+| **Body Text** | 10.5–11 pt | Regular | **1.2x** | 0 pt | **6 pt** | No |
+| **Table Cells** | 9–9.5 pt | Regular | 1.15x | 0 pt | 0 pt | No |
+| **Table Headers** | 9.5 pt | Bold | 1.1x | 0 pt | 0 pt | Yes |
+| **Callout Body** | 9.5 pt | Regular | 1.15x | 0 pt | 2 pt | No |
+| **Header / Footer** | 8.5 pt | Regular | 1.0x | 0 pt | 0 pt | No |
+| **Caption** | 9 pt | Italic | 1.15x | 4 pt | 8 pt | No |
+
+> [!IMPORTANT]
+> **The Anti-Orphan Rule**: Every heading paragraph MUST have `keep_with_next = True`. Never let a heading detach at the bottom of a page without its subsequent content.
 
 For Arabic:
 - verify Arabic glyph quality and weight availability;
-- use true RTL paragraph direction;
+- use true RTL paragraph direction (`w:bidi`);
 - test Arabic numerals, Latin identifiers, URLs, punctuation, and mixed-script cells;
 - do not force an Arabic typeface into English code or identifiers when an appropriate LTR font is needed.
 
-## 5. Color system
+## 5. Color Palettes & Concrete Hex Tokens
 
-Use a restrained palette:
+Use a restrained, intentional palette. Avoid default Word blue (#2E74B5), rainbow gradients, or arbitrary colors.
 
-- neutral background/text colors
-- one primary accent
-- optionally one secondary accent for semantic distinction
+### Production Palettes
 
-Color should communicate hierarchy, category, status, or emphasis. It should not be used to decorate every component.
+#### Slate Executive (Corporate / Strategy / Leadership)
+- **Primary (Headings/Brand)**: `#0F172A` (Slate 900)
+- **Secondary (Subheadings)**: `#1E293B` (Slate 800)
+- **Accent (Rules, Accents)**: `#2563EB` (Royal Blue)
+- **Accent Light (Callout Fills)**: `#EFF6FF` (Blue 50)
+- **Body Text**: `#0F172A` (Slate 900)
+- **Muted Text / Metadata**: `#64748B` (Slate 500)
+- **Surface / Zebra Fill**: `#F8FAFC` (Slate 50)
+- **Subtle Border**: `#E2E8F0` (Slate 200)
+- **Highlight**: `#F59E0B` (Amber)
 
-Good directions include academic navy/ivory, restrained monochrome, editorial earth tones, technical cool neutrals, or a muted regional palette. Choose based on context.
+#### Nordic Frost (Modern / Clean / Tech)
+- **Primary**: `#1E293B` · **Secondary**: `#334155` · **Accent**: `#0284C7` · **Accent Light**: `#F0F9FF` · **Text**: `#1E293B` · **Muted**: `#64748B` · **Border**: `#E2E8F0`
 
-Avoid default Office blue, rainbow palettes, excessive gradients, neon accents, and low-contrast text.
+#### Academic Crimson (Formal / University / Institutional)
+- **Primary**: `#7F1D1D` · **Secondary**: `#991B1B` · **Accent**: `#B91C1C` · **Accent Light**: `#FEF2F2` · **Text**: `#1C1917` · **Muted**: `#78716C` · **Surface**: `#FAF8F5` · **Border**: `#E7E5E4`
+
+#### Forest Emerald (Sustainability / Health / Environment)
+- **Primary**: `#14532D` · **Secondary**: `#166534` · **Accent**: `#059669` · **Accent Light**: `#ECFDF5` · **Text**: `#0F172A` · **Muted**: `#64748B` · **Surface**: `#F7F9F6` · **Border**: `#E2E8F0`
+
+### Page Margins & Geometry Presets
+
+| Preset | Top | Bottom | Left | Right | Header | Footer |
+|---|---|---|---|---|---|---|
+| **Executive** | 0.75" | 0.75" | 0.8" | 0.8" | 0.4" | 0.4" |
+| **Academic** | 1.0" | 1.0" | 1.25" | 1.0" | 0.5" | 0.5" |
+| **Compact** | 0.6" | 0.6" | 0.65" | 0.65" | 0.35" | 0.35" |
 
 ## 6. Component language
 

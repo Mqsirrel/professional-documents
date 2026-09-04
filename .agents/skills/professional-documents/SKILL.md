@@ -29,8 +29,10 @@ Before a substantial design task, consult:
 
 - `references/design-system.md` — visual hierarchy, typography, grid, tables, pagination, anti-slop rules, and visual scoring.
 - `references/art-direction-playbook.md` — choosing a visual concept, page archetypes, density management, and redesign protocol.
+- `references/docx-recipes.md` — concrete design tokens, hex palettes, OpenXML recipes, and python-docx component patterns.
 - `references/qa-checklist.md` — final quality checks.
-- `references/tooling.md` — available implementation/rendering approaches.
+- `references/tooling.md` — execution commands, headless rendering, and visual extraction.
+- `scripts/docx_craft.py` — pre-packaged craft engine for typography, tables, callouts, covers, and headless rendering.
 
 Do not load every reference for a trivial text-only edit. Load the references relevant to the task.
 
@@ -157,24 +159,34 @@ Choose page archetypes from the content. Do not force every page into the same l
 
 ### Phase E — Build
 
-Prefer semantic/native Office structures:
+Prefer semantic/native Office structures and avoid default unstyled output:
 
-- real heading styles;
-- real lists and numbering;
-- real tables;
-- real headers/footers;
-- real page numbers;
-- TOC fields where appropriate;
-- editable/native charts where appropriate;
-- captions and cross-references;
-- clickable hyperlinks;
-- correct metadata.
+- **Headings & Anti-Orphan Rule**: Apply `keep_with_next = True` to every heading paragraph so headings never orphan at page bottoms.
+- **Typography Geometry**: Set intentional line spacing (1.15–1.2x) and paragraph spacing (`space_after = Pt(6)`).
+- **Table Engineering**:
+  - Invert raw grid lines into subtle horizontal borders (`#E2E8F0`) with no harsh vertical borders.
+  - Set generous cell padding (`w:tblCellMar`: 6–7pt top/bottom, 8–9pt left/right).
+  - Repeat the header row across pages (`w:tblHeader`).
+  - Prevent row splitting across pages (`w:cantSplit`).
+- **Callouts & Highlights**: Use padded single-cell containers with thick left accent borders (`w:tcBorders`) and tinted background fills.
+- **Headers & Footers**: Suppress on cover page (`different_first_page_header_footer = True`), add subtle dividing rules, and use dynamic native Word page fields (`Page X of Y`).
+- **RTL / Mixed Script**: Apply `w:bidi` to paragraphs and `w:bidiVisual` to tables for Arabic text.
 
-For high-fidelity editing, preserve the original structure rather than recreating it unnecessarily. Use OpenXML/XML-level manipulation when high-level libraries cannot preserve the required Word behavior.
+*Pro tip*: Downstream agents can directly use or inspect `scripts/docx_craft.py` and `references/docx-recipes.md` to avoid rewriting low-level XML manipulation from scratch.
 
 ### Phase F — Render
 
-Render the document to PDF and/or page images using the available environment. Determine the actual available tools rather than assuming a fixed command exists.
+Render the document to PDF and high-resolution PNG page images:
+
+1. **Headless PDF Conversion**:
+   ```bash
+   soffice --headless --convert-to pdf document.docx --outdir output/
+   ```
+2. **Page Image Extraction (150 DPI)**:
+   ```bash
+   pdftoppm -png -r 150 output/document.pdf output/pages/page
+   ```
+   Or invoke `render_and_preview("document.docx")` from `scripts/docx_craft.py`.
 
 ### Phase G — Visual inspection
 

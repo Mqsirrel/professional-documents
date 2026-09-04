@@ -1,34 +1,72 @@
-# Tooling Strategy
+# Tooling Strategy & Execution Commands
 
 Use the environment's installed tools rather than assuming a specific stack.
 
-## DOCX creation
+## 1. DOCX Creation & python-docx Execution
 
-Preferred order:
-1. Existing project/template when one is provided.
-2. A high-level DOCX library for normal structure and content.
-3. OpenXML/XML editing for features or formatting the high-level library cannot reliably express.
+Run python scripts using `uv` with ephemeral dependency injection so no system-wide package installation is required:
 
-## Rendering
+```bash
+uv run --with python-docx python3 generate_doc.py
+```
 
-Look for available tools such as LibreOffice headless conversion or another installed office/PDF renderer. Determine the actual command and output format from the environment before running it.
+### Pre-packaged Craft Helper
+Downstream agents can directly import or run the bundled helper engine:
+```bash
+# Path: .agents/skills/professional-documents/scripts/docx_craft.py
+```
+It handles:
+- Page geometry presets (Executive 0.75", Academic 1.0", Compact 0.6")
+- Typography styles and line spacing (1.2x body, bold display headings)
+- Table engineering (cell margins, repeating headers, anti-split rows, subtle borders)
+- Highlight callout boxes (accent border, background fill, padding)
+- Dynamic Word page numbers (`Page X of Y` via native OpenXML fields)
+- Cover page archetypes (Executive Stripe, Academic Clean, Minimalist Modern)
 
-## Image inspection
+See `references/docx-recipes.md` for complete code patterns and OpenXML snippets.
 
-When page images are available, inspect them visually. For long documents, inspect every page or a representative sequence plus all pages containing tables, figures, covers, and section transitions.
+## 2. Headless PDF Rendering
 
-## Editing an existing DOCX
+Convert DOCX to PDF without opening a GUI using LibreOffice:
 
-Preserve existing content and structure unless redesign is requested. Before changing global styles, inspect the document's current style definitions and relationships.
+```bash
+soffice --headless --convert-to pdf document.docx --outdir output/
+# or
+libreoffice --headless --convert-to pdf document.docx --outdir output/
+```
 
-## Verification
+## 3. High-Resolution Page Image Extraction
 
-A useful verification chain is:
+Extract PNG images of each rendered page at 150 DPI for visual inspection:
 
-DOCX → PDF → page images → visual inspection → DOCX revision → PDF → page images
+```bash
+pdftoppm -png -r 150 output/document.pdf output/pages/page
+```
 
-Also perform a structural check after visual changes so that styling fixes do not accidentally remove content or break document semantics.
+Output files will be named `page-1.png`, `page-2.png`, etc.
 
-## Failure handling
+## 4. Visual Inspection Workflow
 
-If rendering is unavailable, do not claim visual QA was completed. Perform the strongest structural checks available and clearly distinguish them from visual inspection.
+A standard automated inspection loop:
+
+```python
+from scripts.docx_craft import render_and_preview
+
+# Automatically renders DOCX -> PDF -> PNG images
+pdf_path, image_paths = render_and_preview("my_report.docx", output_dir="output")
+```
+
+Inspect generated PNGs with visual tools (`view_file`). Check for:
+- Cover page balance and negative space
+- Absence of orphan headings at page bottoms
+- Table header row repetition on subsequent pages
+- Scannability and generous cell padding
+- Callout box placement and contrast
+- Correct dynamic page numbering (`Page X of Y`)
+
+## 5. Failure Handling
+
+If LibreOffice is unavailable:
+1. Do not claim visual QA was completed.
+2. Perform structural checks (validate XML, inspect paragraph properties, confirm `keep_with_next` on all headings).
+3. Clearly inform the user that structural verification passed while visual rendering requires LibreOffice.
