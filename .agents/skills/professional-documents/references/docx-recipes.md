@@ -201,15 +201,56 @@ p.add_run(" of ")
 add_field(p.add_run(), "NUMPAGES")
 ```
 
-### 3.8 Arabic RTL Setting
+### 3.8 Arabic Sakkal Majalla Font & RTL Setting
 ```python
-# For paragraph:
+# Configure Sakkal Majalla as complex script font on run:
+def set_arabic_font(run, font_name="Sakkal Majalla", sz_pt=12, bold=False, color_hex="0F172A"):
+    rPr = run._r.get_or_add_rPr()
+    rPr.append(parse_xml(f'<w:rFonts {nsdecls("w")} w:ascii="{font_name}" w:hAnsi="{font_name}" w:cs="{font_name}"/>'))
+    run.font.size = Pt(sz_pt)
+    run.font.bold = bold
+    run.font.color.rgb = hex_to_rgb(color_hex)
+    if rPr.find(qn("w:rtl")) is None:
+        rPr.append(parse_xml(f'<w:rtl {nsdecls("w")}/>'))
+
+# For RTL paragraph direction:
 pPr = paragraph._p.get_or_add_pPr()
 pPr.append(parse_xml(f'<w:bidi {nsdecls("w")}/>'))
 
-# For table:
+# For RTL table visual column flow:
 tblPr = table._tbl.tblPr
 tblPr.append(parse_xml(f'<w:bidiVisual {nsdecls("w")}/>'))
+```
+
+### 3.9 Dark CLI Terminal Command Block
+```python
+# Jet-black background (#0D1117) with neon terminal green prompt ($)
+cell = table.cell(0, 0)
+set_cell_background(cell, "0D1117")
+p = cell.paragraphs[0]
+r_prompt = p.add_run("$ ")
+r_prompt.font.name = "Consolas"
+r_prompt.font.bold = True
+r_prompt.font.color.rgb = hex_to_rgb("3FB950")  # Terminal green
+r_cmd = p.add_run("ls -la /var/log")
+r_cmd.font.name = "Consolas"
+r_cmd.font.color.rgb = hex_to_rgb("E6EDF3")
+```
+
+### 3.10 Dashed Screenshot Dropzone Container
+```python
+# Screenshot dropzone with dashed border and camera glyph
+trPr = row._tr.get_or_add_trPr()
+trPr.append(parse_xml(f'<w:trHeight {nsdecls("w")} w:val="1600" w:hRule="atLeast"/>'))
+tcPr = cell._tc.get_or_add_tcPr()
+tcPr.append(parse_xml(
+    f'<w:tcBorders {nsdecls("w")}>\n'
+    f'  <w:top w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+    f'  <w:left w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+    f'  <w:bottom w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+    f'  <w:right w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+    f'</w:tcBorders>'
+))
 ```
 
 ---

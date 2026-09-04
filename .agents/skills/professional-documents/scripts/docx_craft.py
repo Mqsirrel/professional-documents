@@ -87,12 +87,14 @@ PALETTES: Dict[str, Dict[str, str]] = {
     },
 }
 
+DEFAULT_ARABIC_FONT = "Sakkal Majalla"
+
 FONT_FAMILIES = {
-    "modern": {"display": "Segoe UI", "body": "Segoe UI", "code": "Consolas"},
-    "executive": {"display": "Aptos Display", "body": "Aptos", "code": "Consolas"},
-    "academic": {"display": "Georgia", "body": "Georgia", "code": "Courier New"},
-    "clean": {"display": "Arial", "body": "Arial", "code": "Consolas"},
-    "arabic": {"display": "Amiri", "body": "Amiri", "code": "Consolas"},
+    "modern": {"display": "Segoe UI", "body": "Segoe UI", "code": "Consolas", "arabic": DEFAULT_ARABIC_FONT},
+    "executive": {"display": "Aptos Display", "body": "Aptos", "code": "Consolas", "arabic": DEFAULT_ARABIC_FONT},
+    "academic": {"display": "Georgia", "body": "Georgia", "code": "Courier New", "arabic": DEFAULT_ARABIC_FONT},
+    "clean": {"display": "Arial", "body": "Arial", "code": "Consolas", "arabic": DEFAULT_ARABIC_FONT},
+    "arabic": {"display": DEFAULT_ARABIC_FONT, "body": DEFAULT_ARABIC_FONT, "code": "Consolas", "arabic": DEFAULT_ARABIC_FONT},
 }
 
 def hex_to_rgb(hex_code: str) -> RGBColor:
@@ -320,6 +322,39 @@ def set_arabic_rtl(element, is_table: bool = False) -> None:
         if pPr.find(qn("w:bidi")) is None:
             pPr.append(parse_xml(f'<w:bidi {nsdecls("w")}/>'))
 
+def set_arabic_font(
+    target,
+    font_name: str = DEFAULT_ARABIC_FONT,
+    size_pt: Optional[float] = None,
+    bold: Optional[bool] = None,
+    color_hex: Optional[str] = None,
+    is_rtl: bool = True,
+) -> None:
+    """
+    Format a run or paragraph with the official Sakkal Majalla Arabic font,
+    ensuring OpenXML w:rFonts (w:cs, w:ascii, w:hAnsi) and w:bidi/w:rtl are configured.
+    """
+    if hasattr(target, "_r"):  # Run element
+        rPr = target._r.get_or_add_rPr()
+        for child in list(rPr):
+            if child.tag.endswith("rFonts"):
+                rPr.remove(child)
+        rPr.append(parse_xml(f'<w:rFonts {nsdecls("w")} w:ascii="{font_name}" w:hAnsi="{font_name}" w:cs="{font_name}"/>'))
+        if size_pt is not None:
+            target.font.size = Pt(size_pt)
+        if bold is not None:
+            target.font.bold = bold
+        if color_hex is not None:
+            target.font.color.rgb = hex_to_rgb(color_hex)
+        if is_rtl and rPr.find(qn("w:rtl")) is None:
+            rPr.append(parse_xml(f'<w:rtl {nsdecls("w")}/>'))
+    elif hasattr(target, "_p"):  # Paragraph element
+        pPr = target._p.get_or_add_pPr()
+        if is_rtl and pPr.find(qn("w:bidi")) is None:
+            pPr.append(parse_xml(f'<w:bidi {nsdecls("w")}/>'))
+        for run in target.runs:
+            set_arabic_font(run, font_name=font_name, size_pt=size_pt, bold=bold, color_hex=color_hex, is_rtl=is_rtl)
+
 # ---------------------------------------------------------------------------
 # 5. HIGH-LEVEL COMPONENT BUILDERS (Tables, Callouts, Cards)
 # ---------------------------------------------------------------------------
@@ -510,6 +545,120 @@ def add_stat_card_row(
     prevent_row_split(table.rows[0])
     p_after = doc.add_paragraph()
     p_after.paragraph_format.space_after = Pt(8)
+    return table
+
+def add_terminal_block(
+    doc: Document,
+    command_text: str = "",
+    prompt_char: str = "$",
+    bg_color: str = "0D1117",
+    prompt_color: str = "3FB950",
+    text_color: str = "E6EDF3",
+    font_name: str = "Consolas",
+) -> docx.table.Table:
+    """
+    Creates a dark CLI terminal command box with green prompt and monospace styling.
+    """
+    table = doc.add_table(rows=1, cols=1)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.autofit = False
+    prevent_row_split(table.rows[0])
+    set_table_cell_margins(table, top=100, bottom=100, left=140, right=140)
+
+    cell = table.cell(0, 0)
+    cell.width = Inches(6.8)
+    set_cell_background(cell, bg_color)
+
+    tcPr = cell._tc.get_or_add_tcPr()
+    borders = parse_xml(
+        f'<w:tcBorders {nsdecls("w")}>\n'
+        f'  <w:top w:val="none"/>\n'
+        f'  <w:left w:val="none"/>\n'
+        f'  <w:bottom w:val="none"/>\n'
+        f'  <w:right w:val="none"/>\n'
+        f'</w:tcBorders>'
+    )
+    tcPr.append(borders)
+
+    p = cell.paragraphs[0]
+    p.paragraph_format.space_before = Pt(0)
+    p.paragraph_format.space_after = Pt(0)
+    p.paragraph_format.keep_with_next = True
+
+    r_prompt = p.add_run(f"{prompt_char} ")
+    r_prompt.font.name = font_name
+    r_prompt.font.bold = True
+    r_prompt.font.size = Pt(10)
+    r_prompt.font.color.rgb = hex_to_rgb(prompt_color)
+
+    if command_text:
+        r_cmd = p.add_run(command_text)
+        r_cmd.font.name = font_name
+        r_cmd.font.size = Pt(10)
+        r_cmd.font.color.rgb = hex_to_rgb(text_color)
+
+    p_after = doc.add_paragraph()
+    p_after.paragraph_format.space_before = Pt(0)
+    p_after.paragraph_format.space_after = Pt(4)
+    return table
+
+def add_screenshot_container(
+    doc: Document,
+    label: str = "EXECUTION SCREENSHOT:",
+    hint: str = "📷  Paste terminal screenshot here (must show command and output)",
+    min_height_twips: int = 1600,
+    border_style: str = "dashed",
+    border_color: str = "9AA4B2",
+    bg_color: str = "FAFBFD",
+) -> docx.table.Table:
+    """
+    Creates a dashed-border screenshot dropzone container for lab exercises.
+    """
+    table = doc.add_table(rows=1, cols=1)
+    table.alignment = WD_TABLE_ALIGNMENT.CENTER
+    table.autofit = False
+    prevent_row_split(table.rows[0])
+    set_table_cell_margins(table, top=120, bottom=120, left=140, right=140)
+
+    # Set row min height
+    trPr = table.rows[0]._tr.get_or_add_trPr()
+    trPr.append(parse_xml(f'<w:trHeight {nsdecls("w")} w:val="{min_height_twips}" w:hRule="atLeast"/>'))
+
+    cell = table.cell(0, 0)
+    cell.width = Inches(6.8)
+    set_cell_background(cell, bg_color)
+
+    tcPr = cell._tc.get_or_add_tcPr()
+    borders = parse_xml(
+        f'<w:tcBorders {nsdecls("w")}>\n'
+        f'  <w:top w:val="{border_style}" w:sz="6" w:space="0" w:color="{border_color}"/>\n'
+        f'  <w:left w:val="{border_style}" w:sz="6" w:space="0" w:color="{border_color}"/>\n'
+        f'  <w:bottom w:val="{border_style}" w:sz="6" w:space="0" w:color="{border_color}"/>\n'
+        f'  <w:right w:val="{border_style}" w:sz="6" w:space="0" w:color="{border_color}"/>\n'
+        f'</w:tcBorders>'
+    )
+    tcPr.append(borders)
+
+    p0 = cell.paragraphs[0]
+    p0.paragraph_format.space_before = Pt(0)
+    p0.paragraph_format.space_after = Pt(2)
+    p0.paragraph_format.keep_with_next = True
+    r_lbl = p0.add_run(label)
+    r_lbl.font.size = Pt(8)
+    r_lbl.font.bold = True
+    r_lbl.font.color.rgb = hex_to_rgb("64748B")
+
+    p_hint = cell.add_paragraph()
+    p_hint.alignment = WD_ALIGN_PARAGRAPH.CENTER
+    p_hint.paragraph_format.space_before = Pt(16)
+    p_hint.paragraph_format.space_after = Pt(16)
+    r_h = p_hint.add_run(hint)
+    r_h.font.size = Pt(8.5)
+    r_h.font.color.rgb = hex_to_rgb("8B949E")
+
+    p_after = doc.add_paragraph()
+    p_after.paragraph_format.space_before = Pt(0)
+    p_after.paragraph_format.space_after = Pt(4)
     return table
 
 # ---------------------------------------------------------------------------

@@ -84,6 +84,21 @@ def set_bidi(p) -> None:
     if pPr.find(qn("w:bidi")) is None:
         pPr.append(parse_xml(f'<w:bidi {nsdecls("w")}/>'))
 
+def set_arabic_font(run, font_name="Sakkal Majalla", sz=None, bold=None, color_hex=None):
+    rPr = run._r.get_or_add_rPr()
+    for c in list(rPr):
+        if c.tag.endswith("rFonts"):
+            rPr.remove(c)
+    rPr.append(parse_xml(f'<w:rFonts {nsdecls("w")} w:ascii="{font_name}" w:hAnsi="{font_name}" w:cs="{font_name}"/>'))
+    if sz is not None:
+        run.font.size = Pt(sz)
+    if bold is not None:
+        run.font.bold = bold
+    if color_hex is not None:
+        run.font.color.rgb = hex_to_rgb(color_hex)
+    if rPr.find(qn("w:rtl")) is None:
+        rPr.append(parse_xml(f'<w:rtl {nsdecls("w")}/>'))
+
 def build_redesigned_document(output_path: str, logo_path: str) -> Document:
     doc = Document()
 
@@ -106,6 +121,8 @@ def build_redesigned_document(output_path: str, logo_path: str) -> Document:
     normal.paragraph_format.line_spacing = 1.15
     normal.paragraph_format.space_after = Pt(4)
     normal.paragraph_format.space_before = Pt(0)
+    nrPr = normal._element.get_or_add_rPr()
+    nrPr.append(parse_xml(f'<w:rFonts {nsdecls("w")} w:ascii="Segoe UI" w:hAnsi="Segoe UI" w:cs="Sakkal Majalla"/>'))
 
     # -----------------------------------------------------------------------
     # COVER PAGE
@@ -146,10 +163,7 @@ def build_redesigned_document(output_path: str, logo_path: str) -> Document:
     ]
     for idx, (line_text, sz, is_bld) in enumerate(ar_lines):
         r = p_ar.add_run(line_text + ("\n" if idx < len(ar_lines)-1 else ""))
-        r.font.name = "Arial"
-        r.font.size = Pt(sz)
-        r.font.bold = is_bld
-        r.font.color.rgb = hex_to_rgb(COLOR_PRIMARY)
+        set_arabic_font(r, font_name="Sakkal Majalla", sz=sz + 2.0, bold=is_bld, color_hex=COLOR_PRIMARY)
 
     make_row_cant_split(header_tbl.rows[0])
 
@@ -255,10 +269,7 @@ def build_redesigned_document(output_path: str, logo_path: str) -> Document:
         pn.paragraph_format.space_before = Pt(1)
         pn.paragraph_format.space_after = Pt(1)
         rn = pn.add_run(name)
-        rn.font.name = "Arial"
-        rn.font.bold = True
-        rn.font.size = Pt(10.5)
-        rn.font.color.rgb = hex_to_rgb(COLOR_PRIMARY)
+        set_arabic_font(rn, font_name="Sakkal Majalla", sz=12.5, bold=True, color_hex=COLOR_PRIMARY)
 
         # Student ID (Mono, left-aligned)
         pi = c_id.paragraphs[0]
@@ -509,32 +520,39 @@ def build_redesigned_document(output_path: str, logo_path: str) -> Document:
         make_row_cant_split(r1)
         c1 = r1.cells[0]
         c1.width = Inches(6.8)
-        set_cell_shading(c1, "FFFFFF")
-        set_cell_padding(c1, top=80, bottom=80, left=140, right=140)
+        set_cell_shading(c1, "0D1117")
+        set_cell_padding(c1, top=90, bottom=90, left=140, right=140)
 
         p1 = c1.paragraphs[0]
         p1.paragraph_format.space_before = Pt(0)
         p1.paragraph_format.space_after = Pt(0)
         p1.paragraph_format.keep_with_next = True
 
-        r_clbl = p1.add_run("COMMAND:  ")
-        r_clbl.font.size = Pt(8)
-        r_clbl.font.bold = True
-        r_clbl.font.color.rgb = hex_to_rgb(COLOR_TEXT_MUTED)
-
         r_prmpt = p1.add_run("$ ")
         r_prmpt.font.name = "Consolas"
         r_prmpt.font.bold = True
         r_prmpt.font.size = Pt(10.5)
-        r_prmpt.font.color.rgb = hex_to_rgb(COLOR_ACCENT)
+        r_prmpt.font.color.rgb = hex_to_rgb("3FB950")
 
-        # Row 2: Screenshot Drop Zone
+        # Row 2: Screenshot Drop Zone (Dashed Border + Camera Glyph)
         r2 = q_tbl.rows[2]
         make_row_cant_split(r2)
         c2 = r2.cells[0]
         c2.width = Inches(6.8)
-        set_cell_shading(c2, COLOR_SURFACE)
-        set_cell_padding(c2, top=140, bottom=140, left=140, right=140)
+        set_cell_shading(c2, "FAFBFD")
+        set_cell_padding(c2, top=130, bottom=130, left=140, right=140)
+
+        # Set dashed border on screenshot container
+        tcPr2 = c2._tc.get_or_add_tcPr()
+        borders2 = parse_xml(
+            f'<w:tcBorders {nsdecls("w")}>\n'
+            f'  <w:top w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+            f'  <w:left w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+            f'  <w:bottom w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+            f'  <w:right w:val="dashed" w:sz="6" w:space="0" w:color="9AA4B2"/>\n'
+            f'</w:tcBorders>'
+        )
+        tcPr2.append(borders2)
 
         # Set minimum height for screenshot box (1600 twips = 1.11 inches, atLeast)
         trPr2 = r2._tr.get_or_add_trPr()
@@ -552,10 +570,10 @@ def build_redesigned_document(output_path: str, logo_path: str) -> Document:
         p2_hint.alignment = WD_ALIGN_PARAGRAPH.CENTER
         p2_hint.paragraph_format.space_before = Pt(14)
         p2_hint.paragraph_format.space_after = Pt(14)
-        r_hint = p2_hint.add_run("[ Paste terminal execution screenshot here ]")
+        r_hint = p2_hint.add_run("📷  Paste terminal screenshot here (must show executed command and output)")
         r_hint.font.italic = True
         r_hint.font.size = Pt(8.5)
-        r_hint.font.color.rgb = hex_to_rgb("94A3B8")
+        r_hint.font.color.rgb = hex_to_rgb("8B949E")
 
         # Spacing after question table
         p_post = doc.add_paragraph()

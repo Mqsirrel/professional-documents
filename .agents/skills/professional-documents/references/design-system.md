@@ -47,7 +47,7 @@ Standard Font Presets:
 - **Modern / Clean**: Segoe UI / Aptos (headings & body), Consolas (code)
 - **Executive**: Aptos Display / Aptos, or Calibri / Calibri Light
 - **Academic**: Georgia / Garamond / Times New Roman, Courier New (code)
-- **Arabic / Mixed**: Amiri / Cairo / Tahoma / Arial (body & headings)
+- **Arabic / Mixed**: **Sakkal Majalla** (Default Arabic body & headings; `w:cs="Sakkal Majalla"`), or Amiri / Traditional Arabic for classical texts. Size Arabic at +1.5pt to +2pt relative to Latin for optical balance.
 
 ### Concrete Typographic Scale & Spacing Scale
 
