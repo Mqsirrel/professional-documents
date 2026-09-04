@@ -29,16 +29,39 @@ from docx_craft import (
     render_and_preview,
 )
 
+MOCK_PROGRAM_DATA = {
+    "program": {
+        "name": "Cybersecurity",
+        "university": "Taibah University",
+        "durationYears": 5,
+        "terms": 10,
+    },
+    "courses": [
+        {"code": "GS 111", "name": "Arabic Language Skills I", "term": 1, "credits": 2, "type": "University Core"},
+        {"code": "ENG 101", "name": "English Language Skills I", "term": 1, "credits": 4, "type": "Preparatory"},
+        {"code": "GS 101", "name": "Islamic Studies: Belief and Worship", "term": 1, "credits": 2, "type": "University Core"},
+        {"code": "CHEM 101", "name": "Introduction to Chemistry", "term": 1, "credits": 3, "type": "College Core"},
+        {"code": "MATH 101", "name": "Introduction to Mathematics", "term": 1, "credits": 3, "type": "College Core"},
+        {"code": "PHYS 101", "name": "Introduction to Physics", "term": 2, "credits": 3, "type": "College Core"},
+        {"code": "BIOL 101", "name": "Introduction to Biology", "term": 2, "credits": 3, "type": "College Core"},
+        {"code": "GS 152", "name": "Computer Skills", "term": 2, "credits": 2, "type": "Preparatory"},
+        {"code": "ENG 102", "name": "English Language Skills II", "term": 2, "credits": 4, "type": "Preparatory"},
+        {"code": "GS 151", "name": "University Life Skills", "term": 2, "credits": 2, "type": "Preparatory"},
+        {"code": "CS 111", "name": "Programming I", "term": 3, "credits": 4, "type": "Major Core"},
+        {"code": "CS 103", "name": "Discrete Structures", "term": 3, "credits": 3, "type": "Major Core"},
+        {"code": "MATH 203", "name": "Calculus I", "term": 3, "credits": 3, "type": "Major Core"},
+        {"code": "CYB 201", "name": "Network Security & Defense", "term": 4, "credits": 4, "type": "Major Core"},
+        {"code": "CYB 301", "name": "Applied Cryptography", "term": 5, "credits": 3, "type": "Major Core"},
+        {"code": "CYB 350", "name": "Digital Forensics & Incident Handling", "term": 6, "credits": 4, "type": "Major Core"},
+        {"code": "CYB 410", "name": "Cloud Security Architecture", "term": 7, "credits": 3, "type": "Major Core"},
+        {"code": "CYB 490", "name": "Senior Capstone Project I", "term": 9, "credits": 3, "type": "Capstone"},
+        {"code": "CYB 491", "name": "Senior Capstone Project II", "term": 10, "credits": 3, "type": "Capstone"},
+    ]
+}
+
 def run_test():
-    repo_root = SCRIPT_DIR.parents[3]
-    courses_json_path = repo_root / "data" / "courses.json"
-    assert courses_json_path.exists(), f"Could not find courses.json at {courses_json_path}"
-
-    with open(courses_json_path, "r", encoding="utf-8") as f:
-        data = json.load(f)
-
-    program = data.get("program", {})
-    courses = data.get("courses", [])
+    program = MOCK_PROGRAM_DATA["program"]
+    courses = MOCK_PROGRAM_DATA["courses"]
 
     print(f"Loaded program: {program.get('name')} from {program.get('university')}")
     print(f"Total courses loaded: {len(courses)}")
